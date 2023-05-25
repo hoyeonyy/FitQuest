@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class ExerciseApiController {
 
 
     @PostMapping("/gym/exercise/complete")
-    public ResponseEntity<ExerciseCompleteResponseDto> exerciseComplete(ExerciseCompleteRequestDto exerciseCompleteRequestDto){
+    public ResponseEntity<ExerciseCompleteResponseDto> exerciseComplete(@RequestBody  ExerciseCompleteRequestDto exerciseCompleteRequestDto){
         ExerciseCompleteResponseDto exerciseCompleteResponseDto = new ExerciseCompleteResponseDto();
         Member member = memberRepository.findOne(exerciseCompleteRequestDto.memberId);
         List<GymReport> gymAllReports = gymReportJPARepository.findByMember(member); // 회원이 가지고있는 모든 보고서를 조회한다.
@@ -41,6 +42,7 @@ public class ExerciseApiController {
             Set set = new Set();
             set.setExercise(exercise);
             set.setRep(lep);
+            exercise.getSets().add(set);
             setJPARepository.save(set);
         }
         exercise.setComplete(Complete.YES);
