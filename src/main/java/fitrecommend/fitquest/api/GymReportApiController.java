@@ -118,8 +118,14 @@ public class GymReportApiController {
 
         Member member = memberRepository.findOne(memberId);
         List<GymReport> gymReports = gymReportRepository.findByToday(member.getToday());
-        GymReport gymReport = gymReports.get(gymReports.size()-1);
         FlaskRecommendRequestDto requestDto = new FlaskRecommendRequestDto();
+        GymReport gymReport = new GymReport();
+        if(gymReports.isEmpty()) {
+        }
+        else {
+            gymReport = gymReports.get(gymReports.size() - 1); //이부분이 문제가 될수 있음 위에 gymReport를 새로만들었는데 쳐넣어버림
+        }
+
         requestDto.setMemberId(memberId);
         requestDto.setToday(member.getToday());
         requestDto.setGoal1(member.getSurvey().getGoal1());
@@ -155,24 +161,24 @@ public class GymReportApiController {
 //            // 에러 처리
 //        }
 
-        GymReport gymreport = new GymReport();
+        GymReport newGymReport = new GymReport();
         GymRecommendResponseDto gymRecommendResponseDto = new GymRecommendResponseDto();
-        gymreport.setMember(member);
-        member.getGymReports().add(gymreport);
+        newGymReport.setMember(member);
+        member.getGymReports().add(newGymReport);
         for(Long gymId : responseEntity.getBody().getGymId()){ // AI로부터 운동을 받아와서 저장한다.
             Gym gym = gymRepository.findOne(gymId); // 헬스장 운동을 찾을건데, 그게 회원아이디를 통해서 찾는다?
             Exercise exercise = new Exercise();
             exercise.setGym(gym);
-            exercise.setGymReport(gymreport);
+            exercise.setGymReport(newGymReport);
             exercise.setComplete(Complete.NO);
             exercise.setTotalKcal(0D);
-            gymReport.getExercises().add(exercise);
+            newGymReport.getExercises().add(exercise);
             gymRecommendResponseDto.setGymId(gymId);
             gymRecommendResponseDto.setName(gym.getName());
             gymRecommendResponseDto.setType(gym.getType());
             exerciseJPARepository.save(exercise);
         }
-        gymReportJPARepository.save(gymReport);
+        gymReportJPARepository.save(newGymReport);
         memberRepository.save(member);
 
         return ResponseEntity.ok(gymRecommendResponseDto);
