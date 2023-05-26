@@ -4,6 +4,7 @@ import fitrecommend.fitquest.domain.*;
 import fitrecommend.fitquest.repository.GymReportJPARepository;
 import fitrecommend.fitquest.repository.HomeReportJPARepository;
 import fitrecommend.fitquest.repository.MemberRepository;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,30 +46,31 @@ public class CalenderApiController {
 
         for(HomeReport homeReport : member.getHomeReports()){
             HomeReportDto homeReportDto = new HomeReportDto();
-            homeReportDto.name = homeReport.getName();
-            homeReportDto.endTime = homeReport.getEndtime();
-            homeReportDto.url = homeReport.getHome().getUrl();
-            viewCalenderResponseDto.homeReports.add(homeReportDto);
+            homeReportDto.setName(homeReport.getName());
+            homeReportDto.setEndTime(homeReport.getEndtime());
+            homeReportDto.setUrl(homeReport.getHome().getUrl());
+            viewCalenderResponseDto.getHomeReports().add(homeReportDto);
         }
         return ResponseEntity.ok(viewCalenderResponseDto);
     }
 
+    @Data
     public class ViewCalenderResponseDto{
         private List<GymReportDto> gymReports = new ArrayList<>();
         private List<HomeReportDto> homeReports = new ArrayList<>();
     }
-
+    @Data
     public class GymReportDto{
         private String name;
         private LocalDateTime endTime;
         private List<ExerciseDto> exerciseDtos = new ArrayList<>(); // 운동종류들
     }
-
+    @Data
     public class ExerciseDto{
         private String gymName; // 어떤 운동을 했는지
         private Integer totalReps; // 총 수행횟수
     }
-
+    @Data
     public class HomeReportDto{
         private String name;
         private LocalDateTime endTime;

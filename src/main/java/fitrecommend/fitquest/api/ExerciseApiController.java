@@ -30,10 +30,10 @@ public class ExerciseApiController {
     @PostMapping("/gym/exercise/complete")
     public ResponseEntity<ExerciseCompleteResponseDto> exerciseComplete(@RequestBody  ExerciseCompleteRequestDto exerciseCompleteRequestDto){
         ExerciseCompleteResponseDto exerciseCompleteResponseDto = new ExerciseCompleteResponseDto();
-        Member member = memberRepository.findOne(exerciseCompleteRequestDto.memberId);
+        Member member = memberRepository.findOne(exerciseCompleteRequestDto.getMemberId());
         List<GymReport> gymAllReports = gymReportJPARepository.findByMember(member); // 회원이 가지고있는 모든 보고서를 조회한다.
         GymReport gymReport = gymAllReports.get(gymAllReports.size()-1);
-        Exercise exercise = exerciseJPARepository.findByGymReportAndGymId(gymReport, exerciseCompleteRequestDto.gymId);
+        Exercise exercise = exerciseJPARepository.findByGymReportAndGymId(gymReport, exerciseCompleteRequestDto.getGymId());
 
         for(Integer lep : exerciseCompleteRequestDto.getLeps()){
             Sets sets = new Sets();
@@ -51,14 +51,14 @@ public class ExerciseApiController {
 
     @PostMapping("/gym/exercise/satisfaction")
     public ResponseEntity<GymReportSatisfactionResponse> exerciseSatisfaction(@RequestBody GymReportSatisfactionRequest gymReportSatisfactionRequest){
-        Member member = memberRepository.findOne(gymReportSatisfactionRequest.memberId);
+        Member member = memberRepository.findOne(gymReportSatisfactionRequest.getMemberId());
         GymReportSatisfactionResponse gymReportSatisfactionResponse = new GymReportSatisfactionResponse();
         List<GymReport> gymAllReports = gymReportJPARepository.findByMember(member); // 회원이 가지고있는 모든 보고서를 조회한다.
         GymReport gymReport = gymAllReports.get(gymAllReports.size()-1);
-        gymReport.setName(gymReportSatisfactionRequest.ReportName);
+        gymReport.setName(gymReportSatisfactionRequest.getReportName());
         for(SatisfactionDto satisfactionDto: gymReportSatisfactionRequest.getSatisfactionDtos()){
-            Exercise exercise = exerciseJPARepository.findByGymReportAndGymId(gymReport, satisfactionDto.gymId);
-            exercise.setSatisfaction(satisfactionDto.satisfaction);
+            Exercise exercise = exerciseJPARepository.findByGymReportAndGymId(gymReport, satisfactionDto.getGymId());
+            exercise.setSatisfaction(satisfactionDto.getSatisfaction());
             exerciseJPARepository.save(exercise);
         }
         gymReportSatisfactionResponse.setState("Success");
