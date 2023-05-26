@@ -24,7 +24,7 @@ public class MemberApiController {
 
         @PostMapping("/join") // 회원 가입
         public ResponseEntity<JoinResponseDTO> join(@RequestBody JoinRequestDTO joinRequestDto) {
-            String token = joinRequestDto.getToken();
+            Long token = joinRequestDto.getToken();
             String name = joinRequestDto.getName();
             String gender = joinRequestDto.getGender();
             String email = joinRequestDto.getEmail();
@@ -49,7 +49,7 @@ public class MemberApiController {
         }
 
         @GetMapping("/auth/member/{token}") //로그인(토큰의 고유값으로 조회해서 확인한다)
-        public ResponseEntity<LoginResponseDTO> login(@PathVariable String token) {
+        public ResponseEntity<LoginResponseDTO> login(@PathVariable Long token) {
             Member member = memberRepository.findByToken(token);
 
             LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
@@ -102,7 +102,7 @@ public class MemberApiController {
         private String gender;
         private String email;
         private String birth;
-        private String token;
+        private Long token;
 
         public JoinRequestDTO() {
             // 기본 생성자

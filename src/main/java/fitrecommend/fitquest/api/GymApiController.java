@@ -25,15 +25,17 @@ public class GymApiController {
     public ResponseEntity<List<GymResponseDto>> getGym(){
         List<Gym> gyms = gymJPARepository.findAll();
         List<GymResponseDto> gymDtos = new ArrayList<>();
-
+        int i=1;
         for (Gym gym : gyms) {
             GymResponseDto gymDto = new GymResponseDto();
             gymDto.setId(gym.getId());
             gymDto.setName(gym.getName());
             gymDto.setGymType(gym.getType());
             gymDto.setUrl(gym.getUrl());
+            i++;
 
             gymDtos.add(gymDto);
+            if(i > 43)break; // 계속 반복문 돌아서 그냥 43개에서 멈춰버림
         }
         return ResponseEntity.ok(gymDtos);
     }

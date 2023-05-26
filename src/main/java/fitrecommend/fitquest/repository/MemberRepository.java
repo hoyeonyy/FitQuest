@@ -33,7 +33,7 @@ public class MemberRepository {
 //                .setParameter("token", token);
 //    }
 //  위의 코드를 아래코드로 대체하니까 쿼리가 제대로 실행되고 데이터베이스에 저장됌.
-    public Member findByToken(String token) {
+    public Member findByToken(Long token) {
         TypedQuery<Member> query = em.createQuery("select m from Member m where m.token = :token", Member.class);
         query.setParameter("token", token);
         List<Member> resultList = query.getResultList();

@@ -5,10 +5,7 @@ import fitrecommend.fitquest.repository.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +50,7 @@ public class ExerciseApiController {
     }
 
     @PostMapping("/gym/exercise/satisfaction")
-    public ResponseEntity<GymReportSatisfactionResponse> exerciseSatisfaction(GymReportSatisfactionRequest gymReportSatisfactionRequest){
+    public ResponseEntity<GymReportSatisfactionResponse> exerciseSatisfaction(@RequestBody GymReportSatisfactionRequest gymReportSatisfactionRequest){
         Member member = memberRepository.findOne(gymReportSatisfactionRequest.memberId);
         GymReportSatisfactionResponse gymReportSatisfactionResponse = new GymReportSatisfactionResponse();
         List<GymReport> gymAllReports = gymReportJPARepository.findByMember(member); // 회원이 가지고있는 모든 보고서를 조회한다.

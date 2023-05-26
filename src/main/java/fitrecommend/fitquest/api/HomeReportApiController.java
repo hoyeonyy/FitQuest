@@ -33,18 +33,18 @@ public class HomeReportApiController {
 /**
  * 홈트 데이터셋 전체 찍어보기
  * */
-//    @GetMapping("/hoyeon")
-//    public ResponseEntity<List<HoyeonDTO>> hoho(){
-//        List<HoyeonDTO> hoyeons = new ArrayList<>();
-//        List<Home> hoho = homeJPARepository.findAll();
-//        for(Home home : hoho){
-//            HoyeonDTO  hoyeonDTO = new HoyeonDTO();
-//            hoyeonDTO.setName(home.getVideoName());
-//            hoyeonDTO.setUrl(home.getUrl());
-//            hoyeons.add(hoyeonDTO);
-//        }
-//        return ResponseEntity.ok(hoyeons);
-//    }
+    @GetMapping("/hoyeon")
+    public ResponseEntity<List<HoyeonDTO>> hoho(){
+        List<HoyeonDTO> hoyeons = new ArrayList<>();
+        List<Home> hoho = homeJPARepository.findAll();
+        for(Home home : hoho){
+            HoyeonDTO  hoyeonDTO = new HoyeonDTO();
+            hoyeonDTO.setName(home.getVideoName());
+            hoyeonDTO.setUrl(home.getUrl());
+            hoyeons.add(hoyeonDTO);
+        }
+        return ResponseEntity.ok(hoyeons);
+    }
 
 
     @GetMapping("/home/progress/{memberId}") // 홈트운동 진행여부에 리턴

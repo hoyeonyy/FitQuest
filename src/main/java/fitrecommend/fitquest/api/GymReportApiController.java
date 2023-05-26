@@ -185,7 +185,7 @@ public class GymReportApiController {
     }
 
     @PostMapping("/gym/report/save")
-    public ResponseEntity<GymSaveResponseDto> gymReportSave(GymSaveRequestDto gymSaveRequestDto){
+    public ResponseEntity<GymSaveResponseDto> gymReportSave(@RequestBody GymSaveRequestDto gymSaveRequestDto){
         Member member = memberRepository.findOne(gymSaveRequestDto.memberId);
         List<GymReport> gymAllReports = gymReportJPARepository.findByMember(member);
         GymReport gymReport = gymAllReports.get(gymAllReports.size()-1);
@@ -234,7 +234,7 @@ public class GymReportApiController {
     }
 
     @PostMapping("gym/report/complete")
-    public ResponseEntity<GymReportCompleteResponseDto> gymReportComplete(GymReportCompleteRequestDto gymReportCompleteRequestDto){
+    public ResponseEntity<GymReportCompleteResponseDto> gymReportComplete(@RequestBody GymReportCompleteRequestDto gymReportCompleteRequestDto){
         Member member = memberRepository.findOne(gymReportCompleteRequestDto.memberId);
         GymReportCompleteResponseDto gymReportCompleteResponseDto = new GymReportCompleteResponseDto();
         List<GymReport> gymReports = gymReportJPARepository.findByMember(member);
