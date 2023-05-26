@@ -30,6 +30,21 @@ public class HomeReportApiController {
 
     private final HomeJPARepository homeJPARepository;
 
+/**
+ * 홈트 데이터셋 전체 찍어보기
+ * */
+//    @GetMapping("/hoyeon")
+//    public ResponseEntity<List<HoyeonDTO>> hoho(){
+//        List<HoyeonDTO> hoyeons = new ArrayList<>();
+//        List<Home> hoho = homeJPARepository.findAll();
+//        for(Home home : hoho){
+//            HoyeonDTO  hoyeonDTO = new HoyeonDTO();
+//            hoyeonDTO.setName(home.getVideoName());
+//            hoyeonDTO.setUrl(home.getUrl());
+//            hoyeons.add(hoyeonDTO);
+//        }
+//        return ResponseEntity.ok(hoyeons);
+//    }
 
 
     @GetMapping("/home/progress/{memberId}") // 홈트운동 진행여부에 리턴
@@ -259,6 +274,18 @@ public class HomeReportApiController {
         private String state;
         public HomeReportSatisfactionResponse(){
         }
+    }
+
+    @Data
+    private class HoyeonDTO {
+        private String url;
+        private String name;
+
+    }
+
+    @Data
+    private class HoyeonDTOs {
+        private List<HoyeonDTO> hoyeonDTOs = new ArrayList<>();
     }
 
     //
