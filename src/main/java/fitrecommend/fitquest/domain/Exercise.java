@@ -18,7 +18,7 @@ public class Exercise {
     private Long id;
 
     @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL)
-    private List<Set> sets = new ArrayList<>();
+    private List<Sets> sets = new ArrayList<>();
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "gymreport_id")
@@ -36,8 +36,8 @@ public class Exercise {
 
     public Double getTotalKcal(){
         Double kcal = 0D;
-        for(Set set : sets){
-            kcal +=  set.getRep() * gym.getKcal();
+        for(Sets sets : this.sets){
+            kcal +=  sets.getRep() * gym.getKcal();
         }
         return kcal;
     }

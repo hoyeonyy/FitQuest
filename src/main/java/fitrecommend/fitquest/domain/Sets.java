@@ -8,7 +8,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
-public class Set {
+public class Sets {
 
     @Id @GeneratedValue
     @Column(name = "set_id")

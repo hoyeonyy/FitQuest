@@ -35,8 +35,8 @@ public class CalenderApiController {
                 ExerciseDto exerciseDto = new ExerciseDto();
                 exerciseDto.gymName = exercise.getGym().getName();
                 exerciseDto.totalReps = 0;
-                for(Set set : exercise.getSets()) {
-                    exerciseDto.totalReps += set.getRep();
+                for(Sets sets : exercise.getSets()) {
+                    exerciseDto.totalReps += sets.getRep();
                 }
                 gymReportDto.exerciseDtos.add(exerciseDto);
             }

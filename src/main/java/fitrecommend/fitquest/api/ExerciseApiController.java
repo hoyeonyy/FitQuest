@@ -36,11 +36,11 @@ public class ExerciseApiController {
         Exercise exercise = exerciseJPARepository.findByGymReportAndGymId(gymReport, exerciseCompleteRequestDto.gymId);
 
         for(Integer lep : exerciseCompleteRequestDto.getLeps()){
-            Set set = new Set();
-            set.setExercise(exercise);
-            set.setRep(lep);
-            exercise.getSets().add(set);
-            setJPARepository.save(set);
+            Sets sets = new Sets();
+            sets.setExercise(exercise);
+            sets.setRep(lep);
+            exercise.getSets().add(sets);
+            setJPARepository.save(sets);
         }
         exercise.setComplete(Complete.YES);
         exercise.setTotalKcal(exercise.getTotalKcal());

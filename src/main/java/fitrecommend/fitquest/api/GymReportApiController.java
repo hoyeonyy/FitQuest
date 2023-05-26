@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fitrecommend.fitquest.domain.*;
 import fitrecommend.fitquest.repository.*;
+import jakarta.persistence.EntityManager;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,6 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Transactional
 public class GymReportApiController {
     private final GymReportJPARepository gymReportJPARepository;
 
@@ -33,7 +36,6 @@ public class GymReportApiController {
     private final GymReportRepository gymReportRepository;
 
     private final ExerciseJPARepository exerciseJPARepository;
-
 //    @GetMapping("/gym/progress/{memberId}") // 헬스 운동 진행여부 리턴.
 //    public ResponseEntity<GymProgressResponseDto> getGymProgress(@PathVariable Long memberId){
 //        Member member = memberRepository.findOne(memberId);
@@ -191,7 +193,9 @@ public class GymReportApiController {
         GymReport gymReport = gymAllReports.get(gymAllReports.size()-1);
         for (Exercise exercise : gymReport.getExercises()) {
             exercise.setGymReport(null); // 연결된 GymReport를 끊어줍니다.
-            exerciseJPARepository.delete(exercise); // Exercise 객체를 삭제합니다.
+            exercise.setGym(null);
+            exerciseJPARepository.delete(exercise);
+
         }
         gymReport.getExercises().clear(); // 마지막으로 조회한 운동보고서에 AI로부터 저장한 운동내역을 다 삭제해버림.
         GymSaveResponseDto gymSaveResponseDto = new GymSaveResponseDto();
