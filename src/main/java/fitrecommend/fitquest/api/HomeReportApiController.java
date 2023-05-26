@@ -147,12 +147,12 @@ public class HomeReportApiController {
     }
 
     @PostMapping("/home/report/save") // 현재 데이터베이스 있는 그대로 시간만 추가하면된다.
-    public ResponseEntity<HomeReportSaveResponse> homeReportSave(HomeReportSaveRequest homeReportSaveRequest){
+    public ResponseEntity<HomeReportSaveResponse> homeReportSave(@RequestBody HomeReportSaveRequest homeReportSaveRequest){
         HomeReportSaveResponse homeReportSaveResponse = new HomeReportSaveResponse();
-        Member member = memberRepository.findOne(homeReportSaveRequest.memberId);
+        Member member = memberRepository.findOne(homeReportSaveRequest.getMemberId());
         List<HomeReport> homeAllReports = homeReportJPARepository.findByMember(member);
         HomeReport homeReport = homeAllReports.get(homeAllReports.size()-1);
-        homeReport.setStarttime(homeReportSaveRequest.startTime);
+        homeReport.setStarttime(homeReportSaveRequest.getStartTime());
         homeReport.setProgress(Progress.INPROGRESS);
         homeReportJPARepository.save(homeReport);
         homeReportSaveResponse.state = "Success";
@@ -160,12 +160,12 @@ public class HomeReportApiController {
     }
 
     @PostMapping("/home/report/complete") // 끝난시간 저장하고 끝?
-    public ResponseEntity<HomeReportCompleteResponse> homeReportComplete(HomeReportCompleteRequest homeReportCompleteRequest){
+    public ResponseEntity<HomeReportCompleteResponse> homeReportComplete(@RequestBody HomeReportCompleteRequest homeReportCompleteRequest){
         HomeReportCompleteResponse homeReportCompleteResponse = new HomeReportCompleteResponse();
-        Member member = memberRepository.findOne(homeReportCompleteRequest.memberId);
+        Member member = memberRepository.findOne(homeReportCompleteRequest.getMemberId());
         List<HomeReport> homeAllReports = homeReportJPARepository.findByMember(member);
         HomeReport homeReport = homeAllReports.get(homeAllReports.size()-1);
-        homeReport.setEndtime(homeReportCompleteRequest.endTime);
+        homeReport.setEndtime(homeReportCompleteRequest.getEndTime());
         homeReport.setProgress(Progress.COMPLETE);
         homeReportJPARepository.save(homeReport);
         homeReportCompleteResponse.state = "Success";
@@ -174,15 +174,15 @@ public class HomeReportApiController {
 
 
     @PostMapping("/home/report/satisfaction")
-    public ResponseEntity<HomeReportSatisfactionResponse> homeReportSaveSatisfaction(HomeReportSatisfactionRequest homeReportSatisfactionRequest){
+    public ResponseEntity<HomeReportSatisfactionResponse> homeReportSaveSatisfaction(@RequestBody HomeReportSatisfactionRequest homeReportSatisfactionRequest){
         HomeReportSatisfactionResponse homeReportSatisfactionResponse = new HomeReportSatisfactionResponse();
-        Member member = memberRepository.findOne(homeReportSatisfactionRequest.memberId);
+        Member member = memberRepository.findOne(homeReportSatisfactionRequest.getMemberId());
         List<HomeReport> homeAllReports = homeReportJPARepository.findByMember(member);
         HomeReport homeReport = homeAllReports.get(homeAllReports.size()-1);
-        homeReport.setName(homeReportSatisfactionRequest.ReportName);
-        homeReport.setSatisfaction(homeReportSatisfactionRequest.satifaction);
+        homeReport.setName(homeReportSatisfactionRequest.getReportName());
+        homeReport.setSatisfaction(homeReportSatisfactionRequest.getSatifaction());
         homeReportJPARepository.save(homeReport);
-        homeReportSatisfactionResponse.state = "Success";
+        homeReportSatisfactionResponse.setState("Success");
         return ResponseEntity.ok(homeReportSatisfactionResponse);
     }
 

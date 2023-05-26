@@ -188,7 +188,7 @@ public class GymReportApiController {
 
     @PostMapping("/gym/report/save")
     public ResponseEntity<GymSaveResponseDto> gymReportSave(@RequestBody GymSaveRequestDto gymSaveRequestDto){
-        Member member = memberRepository.findOne(gymSaveRequestDto.memberId);
+        Member member = memberRepository.findOne(gymSaveRequestDto.getMemberId());
         List<GymReport> gymAllReports = gymReportJPARepository.findByMember(member);
         GymReport gymReport = gymAllReports.get(gymAllReports.size()-1);
         for (Exercise exercise : gymReport.getExercises()) {
@@ -199,7 +199,7 @@ public class GymReportApiController {
         }
         gymReport.getExercises().clear(); // 마지막으로 조회한 운동보고서에 AI로부터 저장한 운동내역을 다 삭제해버림.
         GymSaveResponseDto gymSaveResponseDto = new GymSaveResponseDto();
-        gymReport.setStarttime(gymSaveRequestDto.startTime);
+        gymReport.setStarttime(gymSaveRequestDto.getStartTime());
         gymReport.setMember(member);
         for(Long id : gymSaveRequestDto.getGymId()){
             Optional<Gym> gymOptional = gymJPARepository.findById(id);
@@ -239,7 +239,7 @@ public class GymReportApiController {
 
     @PostMapping("gym/report/complete")
     public ResponseEntity<GymReportCompleteResponseDto> gymReportComplete(@RequestBody GymReportCompleteRequestDto gymReportCompleteRequestDto){
-        Member member = memberRepository.findOne(gymReportCompleteRequestDto.memberId);
+        Member member = memberRepository.findOne(gymReportCompleteRequestDto.getMemberId());
         GymReportCompleteResponseDto gymReportCompleteResponseDto = new GymReportCompleteResponseDto();
         List<GymReport> gymReports = gymReportJPARepository.findByMember(member);
         GymReport gymReport = gymReports.get(gymReports.size()-1);
@@ -249,9 +249,9 @@ public class GymReportApiController {
             gymKcalDto.setGymId(exercise.getGym().getId());
             gymReportCompleteResponseDto.getGymKcalDtos().add(gymKcalDto);
         }
-        gymReport.setStarttime(gymReportCompleteRequestDto.startTime);
+        gymReport.setStarttime(gymReportCompleteRequestDto.getStartTime());
         gymReport.setReportKcal(gymReport.getReportKcal());
-        gymReportCompleteResponseDto.totalGymKcal = gymReport.getReportKcal();
+        gymReportCompleteResponseDto.totalGymKcal = gymReport.getReportKcal(); //이게 뭐냐대체 ㅅㅂ
         gymReport.setProgress(Progress.COMPLETE);
         if(member.getToday() == Today.CHEST){
             gymReport.setToday(Today.CHEST);
