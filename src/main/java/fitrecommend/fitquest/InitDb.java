@@ -134,31 +134,31 @@ public class InitDb {
             em.persist(gym43);
 
 
-            HomeReport homeReport = new HomeReport();
-            homeReport.setProgress(Progress.COMPLETE);
+//            HomeReport homeReport = new HomeReport();
+//            homeReport.setProgress(Progress.INPROGRESS);
 
             /**
              * 헬스탭에서 테스트데이터
              */
-//            GymReport gymReport = new GymReport();
-//            gymReport.setProgress(Progress.INPROGRESS);
-//            Exercise exercise1 = new Exercise();
-//            Exercise exercise2 = new Exercise();
-//            exercise1.setGym(gym1);
-//            exercise2.setGym(gym2);
-//            gymReport.getExercises().add(exercise1);
-//            gymReport.getExercises().add(exercise2);
-//            exercise1.setGymReport(gymReport);
-//            exercise2.setGymReport(gymReport);
+            GymReport gymReport = new GymReport();
+            gymReport.setProgress(Progress.INPROGRESS);
+            Exercise exercise1 = new Exercise();
+            Exercise exercise2 = new Exercise();
+            exercise1.setGym(gym1);
+            exercise2.setGym(gym2);
+            gymReport.getExercises().add(exercise1);
+            gymReport.getExercises().add(exercise2);
+            exercise1.setGymReport(gymReport);
+            exercise2.setGymReport(gymReport);
 
 
             Member member = new Member();
             member.setName("hoyeon");
             member.setToken(12345L);
-            homeReport.setMember(member);
-            member.getHomeReports().add(homeReport);
+            gymReport.setMember(member);
+            member.getGymReports().add(gymReport);
             Survey survey = new Survey();
-            survey.setLocation(SurveyLocation.HOME);
+            survey.setLocation(SurveyLocation.GYM);
             survey.setMember(member);
             member.setSurvey(survey);
             em.persist(member);

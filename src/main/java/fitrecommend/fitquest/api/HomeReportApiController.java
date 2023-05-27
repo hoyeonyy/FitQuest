@@ -168,7 +168,7 @@ public class HomeReportApiController {
         homeReport.setEndtime(homeReportCompleteRequest.getEndTime());
         homeReport.setProgress(Progress.COMPLETE);
         homeReportJPARepository.save(homeReport);
-        homeReportCompleteResponse.state = "Success";
+        homeReportCompleteResponse.setState("Success");
         return ResponseEntity.ok(homeReportCompleteResponse);
     }
 

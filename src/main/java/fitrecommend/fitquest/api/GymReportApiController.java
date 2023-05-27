@@ -251,7 +251,7 @@ public class GymReportApiController {
         }
         gymReport.setStarttime(gymReportCompleteRequestDto.getStartTime());
         gymReport.setReportKcal(gymReport.getReportKcal());
-        gymReportCompleteResponseDto.totalGymKcal = gymReport.getReportKcal(); //이게 뭐냐대체 ㅅㅂ
+        gymReportCompleteResponseDto.setTotalGymKcal(gymReport.getReportKcal());
         gymReport.setProgress(Progress.COMPLETE);
         if(member.getToday() == Today.CHEST){
             gymReport.setToday(Today.CHEST);
