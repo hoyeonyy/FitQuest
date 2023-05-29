@@ -30,24 +30,24 @@ public class CalenderApiController {
         Member member = memberRepository.findOne(memberId);
         for(GymReport gymReport : member.getGymReports()){
             GymReportDto gymReportDto = new GymReportDto();
-            gymReportDto.name = gymReport.getName();
-            gymReportDto.endTime = gymReport.getEndtime();
+            gymReportDto.setName(gymReport.getName());
+            gymReportDto.setStartTime(gymReport.getEndtime());
             for(Exercise exercise : gymReport.getExercises()){
                 ExerciseDto exerciseDto = new ExerciseDto();
-                exerciseDto.gymName = exercise.getGym().getName();
-                exerciseDto.totalReps = 0;
+                exerciseDto.setGymName(exercise.getGym().getName());
+                exerciseDto.setTotalReps(0);
                 for(Sets sets : exercise.getSets()) {
-                    exerciseDto.totalReps += sets.getRep();
+                    exerciseDto.setTotalReps(exerciseDto.getTotalReps()+sets.getRep());
                 }
-                gymReportDto.exerciseDtos.add(exerciseDto);
+                gymReportDto.getExerciseDtos().add(exerciseDto);
             }
-            viewCalenderResponseDto.gymReports.add(gymReportDto);
+            viewCalenderResponseDto.getGymReports().add(gymReportDto);
         }
 
         for(HomeReport homeReport : member.getHomeReports()){
             HomeReportDto homeReportDto = new HomeReportDto();
             homeReportDto.setName(homeReport.getName());
-            homeReportDto.setEndTime(homeReport.getEndtime());
+            homeReportDto.setStartTime(homeReport.getEndtime());
             homeReportDto.setUrl(homeReport.getHome().getUrl());
             viewCalenderResponseDto.getHomeReports().add(homeReportDto);
         }
@@ -62,7 +62,7 @@ public class CalenderApiController {
     @Data
     public class GymReportDto{
         private String name;
-        private LocalDateTime endTime;
+        private LocalDateTime startTime;
         private List<ExerciseDto> exerciseDtos = new ArrayList<>(); // 운동종류들
     }
     @Data
@@ -73,7 +73,7 @@ public class CalenderApiController {
     @Data
     public class HomeReportDto{
         private String name;
-        private LocalDateTime endTime;
+        private LocalDateTime startTime;
         private String url;
     }
 

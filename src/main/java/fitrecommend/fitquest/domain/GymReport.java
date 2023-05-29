@@ -40,6 +40,8 @@ public class GymReport {
 
     private LocalDateTime endtime;
 
+    private Integer duration;
+
     @Enumerated(EnumType.STRING) // ORDINAL로 숫자로 인식해서 +N을하여 데이터를 반환해야하나?
     private Today today;
 

@@ -249,7 +249,8 @@ public class GymReportApiController {
             gymKcalDto.setGymId(exercise.getGym().getId());
             gymReportCompleteResponseDto.getGymKcalDtos().add(gymKcalDto);
         }
-        gymReport.setStarttime(gymReportCompleteRequestDto.getStartTime());
+        gymReport.setStarttime(gymReportCompleteRequestDto.getEndTime());
+        gymReport.setDuration(gymReportCompleteRequestDto.getDuration());
         gymReport.setReportKcal(gymReport.getReportKcal());
         gymReportCompleteResponseDto.setTotalGymKcal(gymReport.getReportKcal());
         gymReport.setProgress(Progress.COMPLETE);
@@ -340,7 +341,8 @@ public class GymReportApiController {
     @Data
     public static class GymReportCompleteRequestDto{
         private Long memberId;
-        private LocalDateTime startTime;
+        private LocalDateTime endTime;
+        private Integer duration;
 
         public GymReportCompleteRequestDto(){
 

@@ -24,4 +24,11 @@ public class Home {
     private String url;
 
     private String videoName;
+
+    public Home(Long id) {
+        this.id = id;
+    }
+
+    public Home() {
+    }
 }

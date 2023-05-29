@@ -17,6 +17,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -29,6 +30,7 @@ public class HomeReportApiController {
     private final HomeReportRepository homeReportRepository;
 
     private final HomeJPARepository homeJPARepository;
+    private final HomeRepository homeRepository;
 
 /**
  * 홈트 데이터셋 전체 찍어보기
@@ -105,13 +107,13 @@ public class HomeReportApiController {
         HomePreferDto homePreferDto1 = new HomePreferDto();
         homePreferDto1.setHomeType(homeReport1.getHome().getType());
         homePreferDto1.setVideoName(homeReport1.getHome().getVideoName());
-        homePreferDto1.setSatisafction(homeReport1.getSatisfaction());
+        homePreferDto1.setSatisfaction(homeReport1.getSatisfaction());
         requestDto.homePreferDtos.add(homePreferDto1);
 
         HomePreferDto homePreferDto2 = new HomePreferDto();
         homePreferDto2.setHomeType(homeReport2.getHome().getType());
         homePreferDto2.setVideoName(homeReport2.getHome().getVideoName());
-        homePreferDto2.setSatisafction(homeReport2.getSatisfaction());
+        homePreferDto2.setSatisfaction(homeReport2.getSatisfaction());
         requestDto.homePreferDtos.add(homePreferDto2);
 
         // JSON 변환
@@ -131,20 +133,33 @@ public class HomeReportApiController {
         homeReport.setMember(member);
         member.getHomeReports().add(homeReport);
         memberRepository.save(member);
-        Home home = new Home();
+        Home home = homeRepository.findOne(responseEntity.getBody().getHomeId());
         home.setHomereport(homeReport);
-        home.setType(responseEntity.getBody().getType());
-        home.setVideoName(responseEntity.getBody().videoName);
-        home.setUrl(responseEntity.getBody().getUrl());
         homeReport.setHome(home);
         homeReportJPARepository.save(homeReport);
-        homeJPARepository.save(home);
         homeRecommendResponseDto.setType(home.getType());
         homeRecommendResponseDto.setVideoName(home.getVideoName());
         homeRecommendResponseDto.setUrl(home.getUrl());
         return ResponseEntity.ok(homeRecommendResponseDto);
 
     }
+
+    /**홈아이디 가져와서 디티오 정상출력되는지 확인*/
+//    @GetMapping ("/chohoyeon/{homeId}")
+//    public ResponseEntity<HomeRecommendResponseDto> zz(@PathVariable Long homeId){
+//
+//        HomeReport homeReport = new HomeReport();
+//        HomeRecommendResponseDto homeRecommendResponseDto = new HomeRecommendResponseDto();
+//
+//        Home home = homeRepository.findOne(homeId);
+//        homeReport.setHome(home);
+//        homeReportJPARepository.save(homeReport);
+//        homeRecommendResponseDto.setType(home.getType());
+//        homeRecommendResponseDto.setVideoName(home.getVideoName());
+//        homeRecommendResponseDto.setUrl(home.getUrl());
+//        return ResponseEntity.ok(homeRecommendResponseDto);
+//    }
+
 
     @PostMapping("/home/report/save") // 현재 데이터베이스 있는 그대로 시간만 추가하면된다.
     public ResponseEntity<HomeReportSaveResponse> homeReportSave(@RequestBody HomeReportSaveRequest homeReportSaveRequest){
@@ -166,6 +181,7 @@ public class HomeReportApiController {
         List<HomeReport> homeAllReports = homeReportJPARepository.findByMember(member);
         HomeReport homeReport = homeAllReports.get(homeAllReports.size()-1);
         homeReport.setEndtime(homeReportCompleteRequest.getEndTime());
+        homeReport.setDuration(homeReportCompleteRequest.getDuration());
         homeReport.setProgress(Progress.COMPLETE);
         homeReportJPARepository.save(homeReport);
         homeReportCompleteResponse.setState("Success");
@@ -180,7 +196,7 @@ public class HomeReportApiController {
         List<HomeReport> homeAllReports = homeReportJPARepository.findByMember(member);
         HomeReport homeReport = homeAllReports.get(homeAllReports.size()-1);
         homeReport.setName(homeReportSatisfactionRequest.getReportName());
-        homeReport.setSatisfaction(homeReportSatisfactionRequest.getSatifaction());
+        homeReport.setSatisfaction(homeReportSatisfactionRequest.getSatisfaction());
         homeReportJPARepository.save(homeReport);
         homeReportSatisfactionResponse.setState("Success");
         return ResponseEntity.ok(homeReportSatisfactionResponse);
@@ -214,15 +230,13 @@ public class HomeReportApiController {
     public static class HomePreferDto{
         private HomeType homeType;
         private String videoName;
-        private Integer satisafction;
+        private Integer satisfaction;
     }
 
 
     @Data
     public static class FlaskRecommendResponseDto{
-        private HomeType type;
-        private String url;
-        private String videoName;
+        private Long homeId;
     }
 
     @Data
@@ -245,8 +259,10 @@ public class HomeReportApiController {
 
     @Data
     public static class HomeReportCompleteRequest{
+
         private Long memberId;
         private LocalDateTime endTime;
+        private Integer duration;
         public HomeReportCompleteRequest(){
 
         }
@@ -262,8 +278,8 @@ public class HomeReportApiController {
     @Data
     public static class HomeReportSatisfactionRequest{
         private Long memberId;
-        private String ReportName;
-        private Integer satifaction;
+        private String reportName;
+        private Integer satisfaction;
 
         public HomeReportSatisfactionRequest(){
         }

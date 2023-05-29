@@ -39,4 +39,5 @@ public class HomeReport {
     private LocalDateTime starttime;
 
     private LocalDateTime endtime;
+    private Integer duration;
 }
