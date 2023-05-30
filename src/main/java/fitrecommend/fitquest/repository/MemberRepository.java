@@ -5,11 +5,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class MemberRepository {
 
     private final EntityManager em;
@@ -41,6 +43,13 @@ public class MemberRepository {
             return resultList.get(0);
         }
         return null;
+    }
+
+    public void deleteById(Long id){
+        Member findMember = em.find(Member.class, id);
+        if (findMember != null) {
+            em.remove(findMember);
+        }
     }
 
 }

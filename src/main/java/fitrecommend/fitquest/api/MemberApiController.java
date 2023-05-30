@@ -76,6 +76,16 @@ public class MemberApiController {
             return ResponseEntity.ok(loginResponseDTO);
         }
 
+        @PostMapping("/withdraw")
+        public ResponseEntity<WithdrawResponseDto> withdraw(@RequestBody WithdrawRequestDto withdrawRequestDto){
+
+            memberRepository.deleteById(withdrawRequestDto.getMemberId());
+            WithdrawResponseDto withdrawResponseDto = new WithdrawResponseDto();
+            withdrawResponseDto.setState("success");
+            return ResponseEntity.ok(withdrawResponseDto);
+
+        }
+
     @Data
     public static class JoinResponseDTO {
 
@@ -110,5 +120,18 @@ public class MemberApiController {
 
     }
 
+    @Data
+    private static class WithdrawResponseDto {
+        private String state;
 
+        public WithdrawResponseDto() {
+        }
+    }
+    @Data
+    private static class WithdrawRequestDto {
+        private Long memberId;
+
+        public WithdrawRequestDto() {
+        }
+    }
 }

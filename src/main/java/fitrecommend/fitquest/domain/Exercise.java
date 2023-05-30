@@ -30,6 +30,7 @@ public class Exercise {
 
     private Integer satisfaction;
 
+    @Enumerated(EnumType.STRING)
     private Complete complete;
 
     private Double totalKcal;

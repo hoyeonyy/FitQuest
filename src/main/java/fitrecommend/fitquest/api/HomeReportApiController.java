@@ -108,20 +108,21 @@ public class HomeReportApiController {
         homePreferDto1.setHomeType(homeReport1.getHome().getType());
         homePreferDto1.setVideoName(homeReport1.getHome().getVideoName());
         homePreferDto1.setSatisfaction(homeReport1.getSatisfaction());
-        requestDto.homePreferDtos.add(homePreferDto1);
+        requestDto.getHomePreferDtos().add(homePreferDto1);
 
         HomePreferDto homePreferDto2 = new HomePreferDto();
         homePreferDto2.setHomeType(homeReport2.getHome().getType());
         homePreferDto2.setVideoName(homeReport2.getHome().getVideoName());
         homePreferDto2.setSatisfaction(homeReport2.getSatisfaction());
-        requestDto.homePreferDtos.add(homePreferDto2);
+        requestDto.getHomePreferDtos().add(homePreferDto2);
+
 
         // JSON 변환
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(requestDto);
 
         // HTTP 요청 보내기
-        String url = "http://<플라스크 API URL>/api/v1/ai/home/recommend";  // 플라스크 API의 엔드포인트 URL
+        String url = "http://13.238.5.151:5000/api/v1/ai/home/recommend";  // 플라스크 API의 엔드포인트 URL
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(jsonData, headers);
@@ -133,6 +134,7 @@ public class HomeReportApiController {
         homeReport.setMember(member);
         member.getHomeReports().add(homeReport);
         memberRepository.save(member);
+
         Home home = homeRepository.findOne(responseEntity.getBody().getHomeId());
         home.setHomereport(homeReport);
         homeReport.setHome(home);

@@ -23,13 +23,18 @@ public class Survey {
     @Enumerated(EnumType.STRING)
     private SurveyLocation location; // 운동 장소
 
+    @Enumerated(EnumType.STRING)
     private GymType goal1; // 운동 목표 - 운동목표가 유의미한 데이터가 아니기에 String으로 저
 
+    @Enumerated(EnumType.STRING)
     private GymType goal2;
 
+    @Enumerated(EnumType.STRING)
     private HomeType prefer1; // 선호 운동 1
 
+    @Enumerated(EnumType.STRING)
     private HomeType prefer2; // 선호 운동 2
+
 
     private Integer frequency; // 운동빈도
 

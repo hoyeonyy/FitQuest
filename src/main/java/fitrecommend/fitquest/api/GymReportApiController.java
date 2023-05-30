@@ -145,7 +145,7 @@ public class GymReportApiController {
         String jsonData = objectMapper.writeValueAsString(requestDto);
 
         // HTTP 요청 보내기
-        String url = "http://<플라스크 API URL>/api/v1/ai/gym/recommend";  // 플라스크 API의 엔드포인트 URL
+        String url = "http://13.238.5.151:5000/api/v1/ai/gym/recommend";  // 플라스크 API의 엔드포인트 URL
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(jsonData, headers);
