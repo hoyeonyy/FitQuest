@@ -116,7 +116,7 @@ public class GymReportApiController {
      * */
 
     @GetMapping("/gym/report/recommend/{memberId}")
-    public ResponseEntity<GymRecommendResponseDto> GymReportRecommend(@PathVariable Long memberId) throws JsonProcessingException {
+    public ResponseEntity<GymRecommendResponseDtos> GymReportRecommend(@PathVariable Long memberId) throws JsonProcessingException {
 
         Member member = memberRepository.findOne(memberId);
         List<GymReport> gymReports = gymReportRepository.findByToday(member.getToday());
@@ -175,26 +175,30 @@ public class GymReportApiController {
 //        }
 
         GymReport newGymReport = new GymReport();
-        GymRecommendResponseDto gymRecommendResponseDto = new GymRecommendResponseDto();
         newGymReport.setMember(member);
         member.getGymReports().add(newGymReport);
-        for(Long gymId : responseEntity.getBody().getGymId()){ // AI로부터 운동을 받아와서 저장한다.
-            Gym gym = gymRepository.findOne(gymId); // 헬스장 운동을 찾을건데, 그게 회원아이디를 통해서 찾는다?
+        GymRecommendResponseDtos gymRecommendResponseDtos = new GymRecommendResponseDtos();
+        List<Long> gymIds = responseEntity.getBody().getGymId();
+        for (Long gymId : gymIds) {
+            Gym gym = gymRepository.findOne(gymId);
             Exercise exercise = new Exercise();
             exercise.setGym(gym);
             exercise.setGymReport(newGymReport);
             exercise.setComplete(Complete.NO);
             exercise.setTotalKcal(0D);
             newGymReport.getExercises().add(exercise);
+            GymRecommendResponseDto gymRecommendResponseDto = new GymRecommendResponseDto();  // 이 부분도 추가되어야 합니다.
             gymRecommendResponseDto.setGymId(gymId);
             gymRecommendResponseDto.setName(gym.getName());
             gymRecommendResponseDto.setType(gym.getType());
+            gymRecommendResponseDtos.getGymRecommendResponseDtos().add(gymRecommendResponseDto);
             exerciseJPARepository.save(exercise);
         }
+
         gymReportJPARepository.save(newGymReport);
         memberRepository.save(member);
 
-        return ResponseEntity.ok(gymRecommendResponseDto);
+        return ResponseEntity.ok(gymRecommendResponseDtos);
     }
 
     @PostMapping("/gym/report/save")

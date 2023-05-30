@@ -107,13 +107,18 @@ public class HomeReportApiController {
             homePreferDto1.setHomeType(member.getSurvey().getPrefer1());
             homePreferDto1.setLastHomeId(null);
             homePreferDto1.setSatisfaction(0);
-            requestDto.getHomePreferDtos().add(homePreferDto1);
+            List<HomePreferDto> homePreferDtos1 = new ArrayList<>();
+            homePreferDtos1.add(homePreferDto1);
+            requestDto.setHomePreferDtos(homePreferDtos1);
 
             HomePreferDto homePreferDto2 = new HomePreferDto();
             homePreferDto2.setHomeType(member.getSurvey().getPrefer2());
             homePreferDto2.setLastHomeId(null);
             homePreferDto2.setSatisfaction(0);
-            requestDto.getHomePreferDtos().add(homePreferDto2);
+            List<HomePreferDto> homePreferDtos2 = new ArrayList<>();
+            homePreferDtos2.add(homePreferDto1);
+            requestDto.setHomePreferDtos(homePreferDtos2);
+
         }
         else{
             HomeReport homeReport1 = homeReports1.get(homeReports1.size()-1);
@@ -244,7 +249,7 @@ public class HomeReportApiController {
     @Data
     public static class FlaskRecommendRequestDto{
         private Long memberId;
-        private List<HomePreferDto> homePreferDtos;
+        private List<HomePreferDto> homePreferDtos = new ArrayList<>();
     }
 
     @Data

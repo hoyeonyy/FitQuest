@@ -160,6 +160,15 @@ public class InitDb {
             Survey survey = new Survey();
             survey.setLocation(SurveyLocation.GYM);
             survey.setMember(member);
+            survey.setBirth("1998-07-22");
+            survey.setCareer(3);
+            survey.setFrequency(3);
+            survey.setGoal1(GymType.BACK);
+            survey.setGoal2(GymType.CHEST);
+            survey.setHeight(180);
+            survey.setWeight(70);
+            survey.setPrefer1(HomeType.PILATES);
+            survey.setPrefer2(HomeType.CORE);
             member.setSurvey(survey);
             em.persist(member);
 
