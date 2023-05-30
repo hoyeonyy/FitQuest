@@ -48,33 +48,39 @@ public class MemberApiController {
             return ResponseEntity.ok(responseDTO);
         }
 
-        @GetMapping("/auth/member/{token}") //로그인(토큰의 고유값으로 조회해서 확인한다)
-        public ResponseEntity<LoginResponseDTO> login(@PathVariable Long token) {
-            Member member = memberRepository.findByToken(token);
-
-            LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
-//            loginResponseDTO.setId(member.getId());
-
-            if (member != null) {
-                // 이미 저장된 멤버인 경우
-                if (member.getSurvey() != null) {
-                    if(member.getSurvey().getLocation() == SurveyLocation.GYM) { // 설문조사에서 헬스장으로 답한경우
-                        loginResponseDTO.setNextPage("gym");
-                        loginResponseDTO.setId(member.getId());
-                    }
-                    else{ // 설문조사에서 홈트로 답한경우
-                        loginResponseDTO.setNextPage("home");
-                        loginResponseDTO.setId(member.getId());
-                    }
-                } else { // 회원이지만 설문조사를 하지 않은 경우
-                    loginResponseDTO.setNextPage("survey");
-                    loginResponseDTO.setId(member.getId());
-                }
-            } else { // 신규 멤버인 경우
-                loginResponseDTO.setNextPage("join");
-            }
+    @GetMapping("/auth/member/{token}") //로그인(토큰의 고유값으로 조회해서 확인한다)
+    public ResponseEntity<LoginResponseDTO> login(@PathVariable Long token) {
+        LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+        if(token == null){
+            loginResponseDTO.setNextPage("join");
+            loginResponseDTO.setId(null);
             return ResponseEntity.ok(loginResponseDTO);
         }
+        Member member = memberRepository.findByToken(token);
+
+//            loginResponseDTO.setId(member.getId());
+
+        if (member != null) {
+            // 이미 저장된 멤버인 경우
+            if (member.getSurvey() != null) {
+                if(member.getSurvey().getLocation() == SurveyLocation.GYM) { // 설문조사에서 헬스장으로 답한경우
+                    loginResponseDTO.setNextPage("gym");
+                    loginResponseDTO.setId(member.getId());
+                }
+                else{ // 설문조사에서 홈트로 답한경우
+                    loginResponseDTO.setNextPage("home");
+                    loginResponseDTO.setId(member.getId());
+                }
+            } else { // 회원이지만 설문조사를 하지 않은 경우
+                loginResponseDTO.setNextPage("survey");
+                loginResponseDTO.setId(member.getId());
+            }
+        } else { // 신규 멤버인 경우
+            loginResponseDTO.setNextPage("join");
+            loginResponseDTO.setId(null);
+        }
+        return ResponseEntity.ok(loginResponseDTO);
+    }
 
         @PostMapping("/withdraw")
         public ResponseEntity<WithdrawResponseDto> withdraw(@RequestBody WithdrawRequestDto withdrawRequestDto){

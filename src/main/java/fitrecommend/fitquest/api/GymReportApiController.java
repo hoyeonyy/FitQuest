@@ -120,24 +120,35 @@ public class GymReportApiController {
 
         Member member = memberRepository.findOne(memberId);
         List<GymReport> gymReports = gymReportRepository.findByToday(member.getToday());
+
         FlaskRecommendRequestDto requestDto = new FlaskRecommendRequestDto();
-        GymReport gymReport = new GymReport();
-        if(gymReports.isEmpty()) {
-        }
-        else {
+        GymReport gymReport;
+        if(gymReports.size() != 0) {
             gymReport = gymReports.get(gymReports.size() - 1); //이부분이 문제가 될수 있음 위에 gymReport를 새로만들었는데 쳐넣어버림
+            for(Exercise exercise : gymReport.getExercises()) {
+                RecentExerciseDto recentExerciseDto = new RecentExerciseDto();
+                recentExerciseDto.setExerciseId(exercise.getId());
+                recentExerciseDto.setSatisfaction(exercise.getSatisfaction());
+                requestDto.getRecentExerciseDtos().add(recentExerciseDto);
+            }
+        }
+        else{
+            RecentExerciseDto recentExerciseDto = new RecentExerciseDto();
+            recentExerciseDto.setSatisfaction(0);
+            recentExerciseDto.setExerciseId(null);
+            requestDto.getRecentExerciseDtos().add(recentExerciseDto);
         }
 
         requestDto.setMemberId(memberId);
         requestDto.setToday(member.getToday());
         requestDto.setGoal1(member.getSurvey().getGoal1());
         requestDto.setGoal2(member.getSurvey().getGoal2());
-        for(Exercise exercise : gymReport.getExercises()) {
-            RecentExerciseDto recentExerciseDto = new RecentExerciseDto();
-            recentExerciseDto.setExerciseId(exercise.getId());
-            recentExerciseDto.setSatisfaction(exercise.getSatisfaction());
-            requestDto.getRecentExerciseDtos().add(recentExerciseDto);
-        }
+//        for(Exercise exercise : gymReport.getExercises()) {
+//            RecentExerciseDto recentExerciseDto = new RecentExerciseDto();
+//            recentExerciseDto.setExerciseId(exercise.getId());
+//            recentExerciseDto.setSatisfaction(exercise.getSatisfaction());
+//            requestDto.getRecentExerciseDtos().add(recentExerciseDto);
+//        }
 
 
         // JSON 변환

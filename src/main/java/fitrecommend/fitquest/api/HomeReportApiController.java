@@ -97,24 +97,43 @@ public class HomeReportApiController {
         Member member = memberRepository.findOne(memberId);
         // HomeReport의 Home의 HomeType이 같은 것을 조회하고
         List<HomeReport> homeReports1 = homeReportRepository.findByHomeType(member.getSurvey().getPrefer1()); // 이번에 어떤 운동을 할건데
-        List<HomeReport> homeReports2 = homeReportRepository.findByHomeType(member.getSurvey().getPrefer1()); // 이번에 어떤 운동을 할건데
-
-        HomeReport homeReport1 = homeReports1.get(homeReports1.size()-1);
-        HomeReport homeReport2 = homeReports2.get(homeReports2.size()-1);
+        List<HomeReport> homeReports2 = homeReportRepository.findByHomeType(member.getSurvey().getPrefer2()); // 이번에 어떤 운동을 할건데
 
         FlaskRecommendRequestDto requestDto = new FlaskRecommendRequestDto();
-        requestDto.setMemberId(memberId);
-        HomePreferDto homePreferDto1 = new HomePreferDto();
-        homePreferDto1.setHomeType(homeReport1.getHome().getType());
-        homePreferDto1.setVideoName(homeReport1.getHome().getVideoName());
-        homePreferDto1.setSatisfaction(homeReport1.getSatisfaction());
-        requestDto.getHomePreferDtos().add(homePreferDto1);
 
-        HomePreferDto homePreferDto2 = new HomePreferDto();
-        homePreferDto2.setHomeType(homeReport2.getHome().getType());
-        homePreferDto2.setVideoName(homeReport2.getHome().getVideoName());
-        homePreferDto2.setSatisfaction(homeReport2.getSatisfaction());
-        requestDto.getHomePreferDtos().add(homePreferDto2);
+        if(homeReports1.size()==0){
+            requestDto.setMemberId(memberId);
+            HomePreferDto homePreferDto1 = new HomePreferDto();
+            homePreferDto1.setHomeType(member.getSurvey().getPrefer1());
+            homePreferDto1.setLastHomeId(null);
+            homePreferDto1.setSatisfaction(0);
+            requestDto.getHomePreferDtos().add(homePreferDto1);
+
+            HomePreferDto homePreferDto2 = new HomePreferDto();
+            homePreferDto2.setHomeType(member.getSurvey().getPrefer2());
+            homePreferDto2.setLastHomeId(null);
+            homePreferDto2.setSatisfaction(0);
+            requestDto.getHomePreferDtos().add(homePreferDto2);
+        }
+        else{
+            HomeReport homeReport1 = homeReports1.get(homeReports1.size()-1);
+            HomeReport homeReport2 = homeReports2.get(homeReports2.size()-1);
+
+
+            requestDto.setMemberId(memberId);
+            HomePreferDto homePreferDto1 = new HomePreferDto();
+            homePreferDto1.setHomeType(homeReport1.getHome().getType());
+            homePreferDto1.setLastHomeId(homeReport1.getHome().getId());
+            homePreferDto1.setSatisfaction(homeReport1.getSatisfaction());
+            requestDto.getHomePreferDtos().add(homePreferDto1);
+
+            HomePreferDto homePreferDto2 = new HomePreferDto();
+            homePreferDto2.setHomeType(homeReport2.getHome().getType());
+            homePreferDto2.setLastHomeId(homeReport2.getHome().getId());
+            homePreferDto2.setSatisfaction(homeReport2.getSatisfaction());
+            requestDto.getHomePreferDtos().add(homePreferDto2);
+        }
+
 
 
         // JSON 변환
@@ -231,7 +250,7 @@ public class HomeReportApiController {
     @Data
     public static class HomePreferDto{
         private HomeType homeType;
-        private String videoName;
+        private Long lastHomeId;
         private Integer satisfaction;
     }
 
