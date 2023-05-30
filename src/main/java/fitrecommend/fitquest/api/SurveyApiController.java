@@ -36,7 +36,7 @@ public class SurveyApiController {
         survey.setCareer(surveyRequestDTO.getCareer());
         survey.setLocation(surveyRequestDTO.getLocation());
         survey.setGoal1(surveyRequestDTO.getGoal1());
-        survey.setGoal1(surveyRequestDTO.getGoal1());
+        survey.setGoal2(surveyRequestDTO.getGoal2());
         survey.setPrefer1(surveyRequestDTO.getPrefer1());
         survey.setPrefer2(surveyRequestDTO.getPrefer2());
         survey.setFrequency(surveyRequestDTO.getFrequency());
