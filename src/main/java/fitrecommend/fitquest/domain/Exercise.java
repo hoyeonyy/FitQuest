@@ -21,7 +21,7 @@ public class Exercise {
     private List<Sets> sets = new ArrayList<>();
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "gymreport_id")
+    @JoinColumn(name = "gymReport_id")
     private GymReport gymReport;
 
     @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)

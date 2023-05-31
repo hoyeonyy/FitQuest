@@ -24,8 +24,6 @@ public class Gym {
 
     private String information;
 
-    @OneToOne(mappedBy = "gym", fetch = LAZY)
-    private Exercise exercise;
 
     private String url;
 

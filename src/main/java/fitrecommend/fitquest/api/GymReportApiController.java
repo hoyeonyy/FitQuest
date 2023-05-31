@@ -36,6 +36,7 @@ public class GymReportApiController {
     private final GymReportRepository gymReportRepository;
 
     private final ExerciseJPARepository exerciseJPARepository;
+
 //    @GetMapping("/gym/progress/{memberId}") // 헬스 운동 진행여부 리턴.
 //    public ResponseEntity<GymProgressResponseDto> getGymProgress(@PathVariable Long memberId){
 //        Member member = memberRepository.findOne(memberId);
@@ -141,6 +142,7 @@ public class GymReportApiController {
 
         requestDto.setMemberId(memberId);
         requestDto.setToday(member.getToday());
+
         requestDto.setGoal1(member.getSurvey().getGoal1());
         requestDto.setGoal2(member.getSurvey().getGoal2());
 //        for(Exercise exercise : gymReport.getExercises()) {
