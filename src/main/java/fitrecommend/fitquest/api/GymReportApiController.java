@@ -196,9 +196,18 @@ public class GymReportApiController {
             gymRecommendResponseDtos.getGymRecommendResponseDtos().add(gymRecommendResponseDto);
             exerciseJPARepository.save(exercise);
         }
-
-        gymReportJPARepository.save(newGymReport);
+        if(member.getToday() == Today.CHEST){
+            newGymReport.setToday(Today.CHEST);
+            member.setToday(Today.BACK);
+        }else if(member.getToday() == Today.BACK){
+            newGymReport.setToday(Today.BACK);
+            member.setToday(Today.LEG);
+        }else{
+            newGymReport.setToday(Today.LEG);
+            member.setToday(Today.CHEST);
+        }
         memberRepository.save(member);
+        gymReportJPARepository.save(newGymReport);
 
         return ResponseEntity.ok(gymRecommendResponseDtos);
     }
