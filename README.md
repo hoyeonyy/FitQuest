@@ -31,7 +31,7 @@ Spring, Jpa, MySQL, AWS
 * 사용자는 자신의 신체정보를 입력하고 운동 루틴을 추천받을 수 있다.
 <div>
   
-  ![홈트](https://github.com/hoyeonyy/FitQuest/assets/114469256/e54ff6a8-4d2d-4cb1-a786-d584e9216116)
+  ![운동](https://github.com/hoyeonyy/FitQuest/assets/114469256/0d0f1a05-a7ac-48cd-9501-25e45af4b6e8)
   
 </div>  
 <br>
