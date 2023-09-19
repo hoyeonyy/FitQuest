@@ -1,53 +1,50 @@
 # FitQuest
+개인화 식단 및 운동 구성 추천 시스템 개발 주제 중 운동에 집중하여 개별 사용자의 다양한 라이프스타일을 운동 구성 추천 시스템을 개발합니다.
 
-프로젝트명 : FitQuest
-개발 기간 : 2023. 03 ~ 2023. 06  
-팀원 및 역할 : AI 개발 1명, Flutter 개발 1명,  Server 개발 2명
+![image](https://github.com/sgo722/FitQuest/assets/88089193/afd44c04-0026-4dee-91ce-b29115378555)
 
-## 📝 Description
-> 개인화 식단 및 운동 구성 추천 시스템 개발 주제 중 운동에 집중하여 개별 사용자의 다양한 라이프스타일을 운동 구성 추천 시스템을 개발합니다.
+## 💡 Topic
 
-## 🛠️ Tech Stack
-Spring, Jpa, MySQL, AWS
+- **라이프스타일에 맞게 운동을 추천하는 피트니스 앱**
 
-<div>
-  
-  ![fitquestmain](https://github.com/hoyeonyy/FitQuest/assets/114469256/f8644155-2cf8-4a4a-8ac7-5b0703b82e52)
-  
-  </div>
+## 📝 Summary
 
+- 사용자에게 **맞춤형 운동 계획**과 **피드백을 제공**하는 피트니스 모바일 어플리케이션입니다. 사용자의 운동 성향, 목표, 신체 정보 등을 분석하여 최적의 운동 방법을 제안합니다. 또한, 사용자의 **운동 기록**과 **건강 상태를 추적**하고, 지속적인 피드백을 통해 목표 달성에 도움을 줍니다.
+
+## 👥 Team
+
+- Flutter 개발 1명
+- AI 개발 1명
+- Server 개발 2명
 
 ## ✅ Main Function
-### 1️⃣ 로그인화면, 소셜로그인 제공
-* 소셜로그인을 통해 로그인가능
-<div>
-  
-  ![메인화면](https://github.com/hoyeonyy/FitQuest/assets/114469256/2d71a374-105d-4f99-8c90-d53d74410a2f)
-  
-</div> 
-<br>
 
-### 2️⃣ 운동 추천 탭
-* 사용자는 자신의 신체정보를 입력하고 운동 루틴을 추천받을 수 있다.
-<div>
-  
-  ![운동](https://github.com/hoyeonyy/FitQuest/assets/114469256/0d0f1a05-a7ac-48cd-9501-25e45af4b6e8)
-  
-</div>  
-<br>
+- **운동 및 루틴 추천**
+    - 매일 개별 사용자에게 적합한 운동 루틴을 구성 및 추천
+- **기록 및 점검**
+    - 운동 기록 보고서를 통해 사용자의 운동 기록 및 상태를 상세하게 기록하고 점검
+- **운동 종류의 다양화**
+    - 홈트, 헬스 등 사용자의 환경과 라이프스타일을 고려한 다양한 운동 세션 추천
 
-### 3️⃣ 운동 보고서
-* 하루의 루틴을 완료하면 운동 보고서를 받아볼 수 있다.
-<div> 
-  
-  ![운동보고서](https://github.com/hoyeonyy/FitQuest/assets/114469256/85596364-47bb-42dd-ade6-642465624497)
-</div>
-<br>
+## 🛠️ Tech Stack
 
-### 4️⃣ 켈린더 기능
-* 켈린더를 통해 사용자가 언제, 얼마나, 무슨 운동을 했는지 기록 할 수 있습니다.
-<div> 
-  
-  ![캘린더](https://github.com/hoyeonyy/FitQuest/assets/114469256/e9787d24-abb8-4d67-8132-03ab5278982c)
-</div>
-<br>
+ `Spring`  `Flutter` `AI` `Figma`  `Mysql` `AWS EC2` 
+
+## 🤔 Learned
+
+- API를 설계하고 통신하면서 애플리케이션과 서버사이에서 데이터가 전달되는 것을 경험할 수 있었음.
+- AWS EC2에 배포환경을 구축해보면서 AWS에 대해서 공부할 수 있었음.
+- ERD를 설계하며 연관관계를 어떻게 지어야하는지에대해서 공부할 수 있었음.
+- Spring과 JPA기술을 활용하면서 각종 어노테이션을 사용하고, 데이터베이스에 접근하는 것을 느껴볼 수 있었음.
+- 첫 프로젝트였기 때문에 프로젝트의 진행 흐름을 느껴볼 수 있었음.
+- 긴 기획과정을 통해서 개발자는 단순히 코드를 작성하는 직업이 아닌 문제 해결을 위한 직업이라는 것을 깨달음.
+
+## 📷 Screenshot
+
+![image](https://github.com/sgo722/FitQuest/assets/88089193/6ac317f6-ee30-4cc4-b8e8-9ec72c703f0c)
+
+![image](https://github.com/sgo722/FitQuest/assets/88089193/7ad5cafc-21a9-4fdf-9208-59454dc894dc)
+
+
+
+![image](https://github.com/sgo722/FitQuest/assets/88089193/476ccb84-3c61-48e6-aa39-64ffd8de656c) ![image](https://github.com/sgo722/FitQuest/assets/88089193/1b60764d-b006-4f7d-b131-54c84da363c3)
