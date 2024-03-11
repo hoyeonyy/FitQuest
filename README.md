@@ -40,11 +40,10 @@
 - 긴 기획과정을 통해서 개발자는 단순히 코드를 작성하는 직업이 아닌 문제 해결을 위한 직업이라는 것을 깨달음.
 
 ## 📷 Screenshot
+![1](https://github.com/hoyeonyy/FitQuest/assets/114469256/7f7d949e-5e67-433d-87fb-b2ab3826118b)
+![2](https://github.com/hoyeonyy/FitQuest/assets/114469256/b08f4474-48ae-4758-8eb1-88088c0a2058)
 
-![image](https://github.com/sgo722/FitQuest/assets/88089193/6ac317f6-ee30-4cc4-b8e8-9ec72c703f0c)
-
-![image](https://github.com/sgo722/FitQuest/assets/88089193/7ad5cafc-21a9-4fdf-9208-59454dc894dc)
+![3](https://github.com/hoyeonyy/FitQuest/assets/114469256/7a9b8a88-649a-421b-b0bd-c007b022eb3f)![4](https://github.com/hoyeonyy/FitQuest/assets/114469256/241bc0ad-8343-4699-aa09-daa550d4c116)
 
 
 
-![image](https://github.com/sgo722/FitQuest/assets/88089193/476ccb84-3c61-48e6-aa39-64ffd8de656c) ![image](https://github.com/sgo722/FitQuest/assets/88089193/1b60764d-b006-4f7d-b131-54c84da363c3)
